@@ -3,11 +3,13 @@
 
 #include "vpoint.hpp"
 
-const float MUTATION_RATE = 0.5;
-const float VELOCITY = 0.05;
+#define BEST GREEN
+#define OTHER RED
+const float MUTATION_RATE = 0.1;
+const float VELOCITY = 0.01;
 const float RADIUS = 0.01;
 const float MAX_MOVES = 100;
-const VPoint GOAL(0.1, 0.5);
+const VPoint GOAL(0.5, 0.1);
 
 class Dot {
     private:

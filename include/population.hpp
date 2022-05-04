@@ -1,23 +1,27 @@
 #ifndef POPULATION_HPP
 #define POPULATION_HPP
 
-// #include "dot.hpp"
+#include "dot.hpp"
 
-// const int POPULATION_SIZE = 1000;
+const int POPULATION_SIZE = 10000;
 
-// class Population {
+class Population {
     
-//     private:
+    private:
     
-//     std::vector<Dot> pop;
+    std::vector<Dot> pop;
+    bool active;
     
-//     public:
+    public:
     
-//     void draw();
-//     void update();
+    Population();
     
-//     void sumFitness();
-//     void naturalSelection();
-// };
+    bool alive() const;
+    void draw();
+    void update();
+    
+    float sumFitness() const;
+    void naturalSelection();
+};
 
 #endif
