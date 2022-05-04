@@ -13,83 +13,119 @@ class VPoint {
     float x;
     float y;
     
-    // /**
-    //  * @brief Construct a VPoint with zeroes
-    //  * 
-    //  */
-    // VPoint();
+    //----------------
+    // Constructors
+    //----------------
     
-    // /**
-    //  * @brief Construct a new VPoint object
-    //  * 
-    //  * @param x 
-    //  * @param y 
-    //  */
-    // VPoint(const float& x, const float& y);
+    /**
+     * @brief Construct a VPoint with zeroes
+     * 
+     */
+    VPoint() : x(0.0f), y(0.0f) {}
     
-    // /**
-    //  * @brief Construct a new VPoint object
-    //  * 
-    //  * @param other
-    //  */
-    // VPoint(const VPoint& other);
+    /**
+     * @brief Construct a new VPoint object
+     * 
+     * @param x 
+     * @param y 
+     */
+    VPoint(const float& x, const float& y) : x(x), y(y) {}
     
-    // /**
-    //  * @brief Copy and return
-    //  * 
-    //  * @return copy of this 
-    //  */
-    // VPoint clone() const;
+    /**
+     * @brief Construct a new VPoint object
+     * 
+     * @param other
+     */
+    VPoint(const VPoint& other) : x(other.x), y(other.y) {}
     
-    // //----------------------
-    // // VPoint Operations
-    // //----------------------
+    /**
+     * @brief Copy and return
+     * 
+     * @return copy of this 
+     */
+    VPoint clone() const { return VPoint(*this); }
+
+    //--------------------
+    // VPoint operations
+    //--------------------
+
+    /**
+     * @brief Sum of x and y
+     * 
+     * @param other 
+     * @return sum
+     */
+    float sum() const {
+        return x + y;
+    }
     
-    // /**
-    //  * @brief Sum of x and y
-    //  * 
-    //  * @param other 
-    //  * @return sum
-    //  */
-    // float sum() const;
+    /**
+     * @brief Magnitude of the distance from the origin
+     * 
+     * @return sqrt(x*x + y*y)
+     */
+    float mag() const {
+        return sqrtf(x*x + y*y);
+    }
+
+    /**
+     * @brief Angle from origin
+     * 
+     * @return atan2(y, x)
+     */
+    float angle() const {
+        return atan2f(y, x);
+    }
+
+    /**
+     * @brief Distance between 2 VPoints
+     * 
+     * @param other 
+     * @return euclidian distance
+     */
+    float dist(const VPoint& other) const {
+        VPoint diff = subtract(other);
+        return (diff*diff).mag();
+    }
     
-    // /**
-    //  * @brief Magnitude of the distance from the origin
-    //  * 
-    //  * @return sqrt(x*x + y*y)
-    //  */
-    // float mag() const;
+    /**
+     * @brief Create a scaled VPoint of magnitude newMag
+     * 
+     * @param newMag 
+     * @return VPoint 
+     */
+    VPoint setMag(const float& newMag) const {
+        return multiply(newMag/mag());
+    }
     
-    // /**
-    //  * @brief Angle from origin
-    //  * 
-    //  * @return atan2(y, x)
-    //  */
-    // float angle() const;
-    
-    // /**
-    //  * @brief Distance between 2 VPoints
-    //  * 
-    //  * @param other 
-    //  * @return euclidian distance
-    //  */
-    // float dist(const VPoint& other) const;
-    
-    // /**
-    //  * @brief Normalized version of VPoint
-    //  * 
-    //  * @return this / magnitutide
-    //  */
-    // VPoint norm() const;
-    
-    // /**
-    //  * @brief Unit vector from angle
-    //  * 
-    //  * @return VPoint(cos(angle), sin(angle))
-    //  */
-    // static VPoint fromAngle(const float& angle);
-    
-    // static VPoint random();
+    /**
+     * @brief Normalized version of VPoint
+     * 
+     * @return this / magnitutide
+     */
+    VPoint norm() const {
+        return divide(mag());
+    }
+
+    /**
+     * @brief Unit vector from angle
+     * 
+     * @return VPoint(cos(angle), sin(angle))
+     */
+    static VPoint fromAngle(const float& angle) {
+        return VPoint(cosf(angle), sinf(angle));
+    }
+
+    /**
+     * @brief Unit vector in random direction
+     * 
+     * @return VPoint
+     */
+    static VPoint random(){
+        const float PI_F = M_PI;
+        float randAngle = ((float(rand()))/float(RAND_MAX)) * 2.0f * PI_F - PI_F;
+        return fromAngle(randAngle);
+    }
     
     //-----------------------
     // Operator Overloading
@@ -278,50 +314,6 @@ class VPoint {
 
     friend VPoint operator/(const VPoint& p1, const VPoint& p2) {
         return p1.divide(p2);
-    }
-    
-    //----------------
-    // Constructors
-    //----------------
-
-    VPoint() : x(0.0f), y(0.0f) {}
-    VPoint(const float& x, const float& y) : x(x), y(y) {}
-    VPoint(const VPoint& other) : x(other.x), y(other.y) {}
-    VPoint clone() const { return VPoint(*this); }
-
-    //--------------------
-    // VPoint operations
-    //--------------------
-
-    float sum() const {
-        return x + y;
-    }
-
-    float mag() const {
-        return sqrtf(x*x + y*y);
-    }
-
-    float angle() const {
-        return atan2f(y, x);
-    }
-
-    float dist(const VPoint& other) const {
-        VPoint diff = subtract(other);
-        return (diff*diff).mag();
-    }
-
-    VPoint norm() const {
-        return divide(mag());
-    }
-
-    static VPoint fromAngle(const float& angle) {
-        return VPoint(cosf(angle), sinf(angle));
-    }
-
-    static VPoint random(){
-        const float PI_F = M_PI;
-        float randAngle = ((float(rand()))/float(RAND_MAX)) * 2.0f * PI_F - PI_F;
-        return fromAngle(randAngle);
     }
 };
 
