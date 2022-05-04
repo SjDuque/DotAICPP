@@ -8,8 +8,7 @@
  * @brief Vector implemented as Point
  * 
  */
-class VPoint {
-    public:
+struct VPoint {
     float x;
     float y;
     
