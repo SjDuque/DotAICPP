@@ -22,7 +22,7 @@ int main(void)
         //----------------------------------------------------------------------------------
         p.update();
         if (!p.alive()) {
-            p.naturalSelection();
+            p = p.naturalSelection();
             cout << epoch++ << " finished" << endl;
         }
         // Draw

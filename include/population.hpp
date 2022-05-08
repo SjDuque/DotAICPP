@@ -3,7 +3,7 @@
 
 #include "dot.hpp"
 
-const int POPULATION_SIZE = 10000;
+const int POPULATION_SIZE = 1000;
 
 class Population {
     
@@ -15,13 +15,16 @@ class Population {
     public:
     
     Population();
+    Population(const Population& pop);
+    Population(const std::vector<Dot>& parent);
+
     
     bool alive() const;
     void draw();
     void update();
     
     float sumFitness() const;
-    void naturalSelection();
+    Population naturalSelection() const;
 };
 
 #endif

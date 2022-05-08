@@ -4,8 +4,23 @@
 
 Population::Population() {
     active = true;
+    
     for (int i = 0; i < POPULATION_SIZE; i++) {
         pop.push_back(Dot());
+    }
+}
+
+Population::Population(const Population& parent) {
+    active = true;
+    for (int i = 0; i < parent.pop.size(); i++) {
+        pop.push_back(parent.pop[i]);
+    }
+}
+
+Population::Population(const std::vector<Dot>& parent) {
+    active = true;
+    for (int i = 0; i < parent.size(); i++) {
+        pop.push_back(parent[i]);
     }
 }
 
@@ -41,25 +56,24 @@ float Population::sumFitness() const {
     return sum;
 }
 
-void Population::naturalSelection() {
-    const float TOTAL_FITNESS = sumFitness();
+Population Population::naturalSelection() const {
     std::vector<Dot> newPop;
     
+    const float TOTAL_FITNESS = sumFitness();
     for (int i = 0; i < pop.size(); i++) {
         float fitThres = float(rand())/float(RAND_MAX) * TOTAL_FITNESS;
-        float runningFit = pop[0].fitness();
+        float runningFit = 0;
         int ind = 0;
         
-        for (int j = 1; j < pop.size(); j++) {
-            runningFit += pop[j].fitness();
+        for (int j = 0; j < pop.size(); j++) {
+            runningFit +=pop[j].fitness();
             if(runningFit >= fitThres) {
                 ind = j;
                 j = pop.size();
             }
         }
+        
         newPop.push_back(pop[ind].mutate());
     }
-    
-    pop = newPop;
-    active = true;
+    return Population(newPop);
 }

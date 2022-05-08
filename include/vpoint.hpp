@@ -284,7 +284,7 @@ struct VPoint {
     }
 
     friend VPoint operator-(const float& f, const VPoint& p) {
-        return p.subtract(f);
+        return VPoint(f, f).subtract(p);
     }
 
     friend VPoint operator-(const VPoint& p1, const VPoint& p2) {
@@ -308,7 +308,7 @@ struct VPoint {
     }
 
     friend VPoint operator/(const float& f, const VPoint& p) {
-        return p.divide(f);
+        return VPoint(f, f).divide(p);
     }
 
     friend VPoint operator/(const VPoint& p1, const VPoint& p2) {
